@@ -1,0 +1,14 @@
+{% extends 'layout.html' %} {% block body %}
+<div class="jumbotron">
+  <h1 class="display-4">Auto ML by {{ app_data['author'] }}</h1>
+  <p>Title: {{ app_data['html_title'] }}</p>
+
+  <hr class="my-4" />
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quis alias,
+    exercitationem quidem vero voluptatem hic! Cumque inventore ratione, odio
+    eius eum possimus est tenetur. Praesentium deleniti nam quidem facere!
+  </p>
+  <a class="btn btn-primary btn-lg" href="/contact" role="button">Contact</a>
+</div>
+{% endblock %}
