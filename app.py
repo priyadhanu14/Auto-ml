@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from flask import Flask, render_template
+from flask import Flask, render_template,redirect,request,url_for
 
 DEVELOPMENT_ENV  = True
 
@@ -17,14 +17,13 @@ app_data = {
 }
 
 
-@app.route('/')
+@app.route('/',methods=['POST','GET'])
 def index():
     return render_template('index.html', app_data=app_data)
 
-
-@app.route('/about')
-def about():
-    return render_template('about.html', app_data=app_data)
+@app.route('/dashboard',methods=['POST','GET'])
+def dashboard():
+    return render_template('dashboard.html', app_data=app_data)
 
 
 @app.route('/service')
