@@ -88,52 +88,58 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
-
             <div class="container-xxl flex-grow-1 container-p-y">
               <!-- Custom file input -->
               <!-- File input -->
               <div class="card">
                 <div class="card-body">
                   <div class="mb-3">
-                    <label for="formFile" class="form-label"
-                      >Add Input File</label
+                    <form
+                      action="submit_form"
+                      method="POST"
+                      enctype="multipart/form-data"
                     >
-                    <input
-                      class="form-control"
-                      type="file"
-                      id="formFile"
-                    /><br />
-                    <label for="formRange2" class="form-label"
-                      >Enter Training Set Range</label
-                    >
-                    <input
-                      type="range"
-                      class="form-range"
-                      min="0"
-                      max="5"
-                      id="formRange2"
-                    /><br /><br />
-                    <label for="exampleFormControlSelect1" class="form-label"
-                      >Enter Type of Dataset</label
-                    >
-                    <select
-                      class="form-select"
-                      id="exampleFormControlSelect1"
-                      aria-label="Default select example"
-                    >
-                      <option value="1">Classification</option>
-                      <option value="2">Regression</option>
-                    </select>
-                    <div class="row mt-3">
-                      <div class="d-grid gap-2 col-lg-6 mx-auto">
-                        <button class="btn btn-success btn-lg" type="button">
-                          SUBMIT
-                        </button>
+                      <label for="file" class="form-label"
+                        >Add Input File</label
+                      >
+                      <input
+                        class="form-control"
+                        type="file"
+                        id="file"
+                        name="file"
+                      /><br />
+                      <label for="formRange2" class="form-label"
+                        >Enter Training Set Range</label
+                      >
+                      <input
+                        type="range"
+                        class="form-range"
+                        min="0"
+                        max="5"
+                        id="formRange2"
+                      /><br /><br />
+                      <label for="dataset_type" class="form-label"
+                        >Enter Type of Dataset</label
+                      >
+                      <select
+                        class="form-select"
+                        id="dataset_type"
+                        name="dataset_type"
+                        aria-label="Default select example"
+                        value=""
+                      >
+                        <option value="0" selected>Select Option</option>
+                        <option value="1">Classification</option>
+                        <option value="2">Regression</option>
+                      </select>
+                      <div class="row mt-3">
+                        <div class="d-grid gap-2 col-lg-6 mx-auto">
+                          <button class="btn btn-success btn-lg" type="submit">
+                            SUBMIT
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="mb-3"></div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -168,7 +174,10 @@
     <script src="../assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="../assets/js/dashboards-analytics.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/ui-toasts.js') }}"></script>
+
+    <!-- Page JS -->
+    <script src="{{ url_for('static', filename='assets/js/dashboards-analytics.js') }}"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
