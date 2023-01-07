@@ -26,6 +26,7 @@ app_data = {
 def index():
     return render_template('index.html', app_data=app_data)
 
+# Dashboard Route
 @app.route('/dashboard',methods=['POST','GET'])
 def dashboard():
     return render_template('dashboard.html', app_data=app_data)
