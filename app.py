@@ -40,11 +40,11 @@ def submit_form():
         # File Storage
         f = request.files['file']
         print(f)
-        file_dir = os.path.join("temp_files",f.filename)
+        file_dir = os.path.join("auto_ml/temp_files",f.filename)
         f.save(file_dir)
 
         # Train_Test_Split
-        preprocess = Preprocess(file_dir,test_size=0.2)
+        preprocess = Preprocess(file_dir)
         X_train,y_train,X_val,y_val = preprocess.preprocess()
 
         # Choose Option

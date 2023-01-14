@@ -10,7 +10,7 @@ class Preprocess:
     def __init__(self,data_dir):
             self.data_dir = data_dir
     
-    def preprocess(self,test_size):
+    def preprocess(self,test_size=0.2):
 
             #Loading datasets
             self.data=pd.read_csv(self.data_dir)
