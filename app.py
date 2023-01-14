@@ -48,9 +48,10 @@ def submit_form():
         X_train,y_train,X_val,y_val = preprocess.preprocess()
 
         # Choose Option
-        if(request.form.get("dataset_type") == 1):
-            classification = Classification(X_train,y_train,X_val,y_val,X_train,y_train,X_val,y_val)
+        if(int(request.form.get("dataset_type")) == 1):
+            classification = Classification(X_train,y_train,X_val,y_val,X_val,y_val,X_val,y_val)
             classification.model()
+            classification.tabulate()
 
     return redirect(url_for('dashboard'))
 

@@ -64,8 +64,9 @@ class Preprocess:
             self.data=self.data.drop(0,axis=0)
             
             # Splitting x and y
-            x=np.array(self.data.iloc[0:,0:11])
-            y=np.array(self.data.iloc[0:,11])
+            print(self.data.shape[1])
+            x=np.array(self.data.iloc[0:,0:self.data.shape[1]])
+            y=np.array(self.data.iloc[0:,-1])
 
             # data feature scaling
             scaler = StandardScaler()
