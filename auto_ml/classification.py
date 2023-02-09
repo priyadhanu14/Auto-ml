@@ -83,7 +83,7 @@ class Classification:
         clf = LogisticRegression(random_state=0).fit(self.X_train, self.y_train)
         y_predtest1 = clf.predict(self.X_test1)
         y_predtest2 = clf.predict(self.X_test2)
-
+        # test
         self.ACC_1['LOGISTIC REGRESSION'] = accuracy_score(y_predtest1,self.y_test1)
         self.ACC_2['LOGISTIC REGRESSION'] = accuracy_score(y_predtest2,self.y_test2)
 
