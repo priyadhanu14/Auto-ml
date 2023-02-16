@@ -18,11 +18,11 @@ class Regression:
     X_train,X_val,X_test1,X_test2 = None,None,None,None
     y_train,y_val,y_test1,y_test2 = None,None,None,None
 
-    RMSE_TEST1  = {'LINEAR REGRESSION':0,'LINEAR REGRESSION SKLEARN':0,'DECISION TREE':0,'RANDOM FOREST':0,'NEURAL NETWORK':0}
-    RMSE_TEST2  = {'LINEAR REGRESSION':0,'LINEAR REGRESSION SKLEARN':0,'DECISION TREE':0,'RANDOM FOREST':0,'NEURAL NETWORK':0}
+    RMSE_TEST1  = {'LINEAR_REGRESSION':0,'LINEAR_REGRESSION_SKLEARN':0,'DECISION_TREE':0,'RANDOM_FOREST':0,'NEURAL NETWORK':0}
+    RMSE_TEST2  = {'LINEAR_REGRESSION':0,'LINEAR_REGRESSION_SKLEARN':0,'DECISION_TREE':0,'RANDOM_FOREST':0,'NEURAL NETWORK':0}
 
-    MSE_TEST1  = {'LINEAR REGRESSION':0,'LINEAR REGRESSION SKLEARN':0,'DECISION TREE':0,'RANDOM FOREST':0,'NEURAL NETWORK':0}
-    MSE_TEST2  = {'LINEAR REGRESSION':0,'LINEAR REGRESSION SKLEARN':0,'DECISION TREE':0,'RANDOM FOREST':0,'NEURAL NETWORK':0}
+    MSE_TEST1  = {'LINEAR_REGRESSION':0,'LINEAR_REGRESSION_SKLEARN':0,'DECISION_TREE':0,'RANDOM_FOREST':0,'NEURAL NETWORK':0}
+    MSE_TEST2  = {'LINEAR_REGRESSION':0,'LINEAR_REGRESSION_SKLEARN':0,'DECISION_TREE':0,'RANDOM_FOREST':0,'NEURAL NETWORK':0}
 
 
     def __init__(self,X_train,y_train,X_val,y_val,X_test1,y_test1,X_test2,y_test2):
@@ -38,7 +38,7 @@ class Regression:
     def rmse(self,predictions,target):return sqrt(((predictions-target)**2).mean())
 
     def tabulate(self,options=['all']):
-        # options = ['LINEAR REGRESSION','LINEAR REGRESSION SKLEARN']
+        # options = ['LINEAR_REGRESSION','LINEAR_REGRESSION_SKLEARN']
         E_TEST_lst = []
         if(options[0] == 'all'):E_TEST_lst = [self.RMSE_TEST1,self.RMSE_TEST2,self.MSE_TEST1,self.MSE_TEST2]
         else:
@@ -60,36 +60,42 @@ class Regression:
 
             E_test_lst = [rmse_test1,rmse_test2,mse_test1,mse_test2]
 
-        E_TEST_df = pd.DataFrame(E_TEST_lst,index=['TEST1','TEST2'])
+        E_TEST_df = pd.DataFrame(E_TEST_lst,index=['TEST1','TEST2','TEST3','TEST4'])
+        print(E_TEST_df)
+        return E_TEST_df
         display(E_TEST_df)
         
-    def model(self,model_type = 'decision_tree_sklearn'):
+    def model(self,model_type = 'all'):
 
         if(model_type == 'all'):
+            print("starting")
             self.linear_regression()
+            print("lin done")
             self.linear_regression_sklearn()
             self.decision_tree_sklearn()
+            print("dec done")
             self.random_forest_sklearn()
+            print("random done")
             self.tabulate(['all'])
 
         if(model_type == 'linear_regression'):
             self.linear_regression()
-            self.tabulate(['LINEAR REGRESSION'])
+            self.tabulate(['LINEAR_REGRESSION'])
 
         elif(model_type == 'linear_regression_sklearn'):
             self.linear_regression_sklearn()
-            self.tabulate(['LINEAR REGRESSION SKLEARN'])
+            self.tabulate(['LINEAR_REGRESSION_SKLEARN'])
 
         elif(model_type == 'decision_tree_sklearn'):
             self.decision_tree_sklearn()
-            self.tabulate(['DECISION TREE SKLEARN'])
+            self.tabulate(['DECISION_TREE SKLEARN'])
 
         elif(model_type == 'random_forest_sklearn'):
             self.random_forest_sklearn()
-            self.tabulate(['RANDOM FOREST SKLEARN'])
+            self.tabulate(['RANDOM_FOREST SKLEARN'])
             
     def linear_regression(self):
-        # linear regression code
+        # LINEAR_REGRESSION code
         costs_train=[]
         costs_val=[]
         cost_list=[]
@@ -138,44 +144,44 @@ class Regression:
             y_predtest2 = np.dot(params_1[0],self.X_test2.T)
             costs_test2.append((mean_squared_error(self.y_test2,y_predtest2)))
 
-        self.RMSE_TEST1['LINEAR REGRESSION'] = self.rmse(y_predtest1,self.y_test1)
-        self.RMSE_TEST2['LINEAR REGRESSION'] = self.rmse(y_predtest2,self.y_test2)
+        self.RMSE_TEST1['LINEAR_REGRESSION'] = self.rmse(y_predtest1,self.y_test1)
+        self.RMSE_TEST2['LINEAR_REGRESSION'] = self.rmse(y_predtest2,self.y_test2)
 
-        self.MSE_TEST1['LINEAR REGRESSION'] = mean_squared_error(y_predtest1,self.y_test1)
-        self.MSE_TEST2['LINEAR REGRESSION'] = mean_squared_error(y_predtest2,self.y_test2)
+        self.MSE_TEST1['LINEAR_REGRESSION'] = mean_squared_error(y_predtest1,self.y_test1)
+        self.MSE_TEST2['LINEAR_REGRESSION'] = mean_squared_error(y_predtest2,self.y_test2)
         
     def linear_regression_sklearn(self):
         model  = LinearRegression().fit(self.X_train,self.y_train)
         y_predtest1 = model.predict(self.X_test1)
         y_predtest2 = model.predict(self.X_test2)
  
-        self.RMSE_TEST1['LINEAR REGRESSION SKLEARN'] = self.rmse(y_predtest1,self.y_test1)
-        self.RMSE_TEST2['LINEAR REGRESSION SKLEARN'] = self.rmse(y_predtest2,self.y_test2)
+        self.RMSE_TEST1['LINEAR_REGRESSION_SKLEARN'] = self.rmse(y_predtest1,self.y_test1)
+        self.RMSE_TEST2['LINEAR_REGRESSION_SKLEARN'] = self.rmse(y_predtest2,self.y_test2)
 
-        self.MSE_TEST1['LINEAR REGRESSION SKLEARN'] = mean_squared_error(y_predtest1,self.y_test1)
-        self.MSE_TEST2['LINEAR REGRESSION SKLEARN'] = mean_squared_error(y_predtest2,self.y_test2)
+        self.MSE_TEST1['LINEAR_REGRESSION_SKLEARN'] = mean_squared_error(y_predtest1,self.y_test1)
+        self.MSE_TEST2['LINEAR_REGRESSION_SKLEARN'] = mean_squared_error(y_predtest2,self.y_test2)
               
     def decision_tree_sklearn(self):
         model = DecisionTreeRegressor(min_samples_leaf=5,random_state = 0).fit(self.X_train,self.y_train)
         y_predtest1 = model.predict(self.X_test1)
         y_predtest2 = model.predict(self.X_test2)
  
-        self.RMSE_TEST1['DECISION TREE'] = self.rmse(y_predtest1,self.y_test1)
-        self.RMSE_TEST2['DECISION TREE'] = self.rmse(y_predtest2,self.y_test2)
+        self.RMSE_TEST1['DECISION_TREE'] = self.rmse(y_predtest1,self.y_test1)
+        self.RMSE_TEST2['DECISION_TREE'] = self.rmse(y_predtest2,self.y_test2)
 
-        self.MSE_TEST1['DECISION TREE'] = mean_squared_error(y_predtest1,self.y_test1)
-        self.MSE_TEST2['DECISION TREE'] = mean_squared_error(y_predtest2,self.y_test2)
+        self.MSE_TEST1['DECISION_TREE'] = mean_squared_error(y_predtest1,self.y_test1)
+        self.MSE_TEST2['DECISION_TREE'] = mean_squared_error(y_predtest2,self.y_test2)
          
     def random_forest_sklearn(self):
         model = RandomForestRegressor(n_estimators =1000,random_state = 42).fit(self.X_train,self.y_train)
         y_predtest1 = model.predict(self.X_test1)
         y_predtest2 = model.predict(self.X_test2)
  
-        self.RMSE_TEST1['RANDOM FOREST'] = self.rmse(y_predtest1,self.y_test1)
-        self.RMSE_TEST2['RANDOM FOREST'] = self.rmse(y_predtest2,self.y_test2)
+        self.RMSE_TEST1['RANDOM_FOREST'] = self.rmse(y_predtest1,self.y_test1)
+        self.RMSE_TEST2['RANDOM_FOREST'] = self.rmse(y_predtest2,self.y_test2)
 
-        self.MSE_TEST1['RANDOM FOREST'] = mean_squared_error(y_predtest1,self.y_test1)
-        self.MSE_TEST2['RANDOM FOREST'] = mean_squared_error(y_predtest2,self.y_test2)
+        self.MSE_TEST1['RANDOM_FOREST'] = mean_squared_error(y_predtest1,self.y_test1)
+        self.MSE_TEST2['RANDOM_FOREST'] = mean_squared_error(y_predtest2,self.y_test2)
     
     def neural_network(self):
 

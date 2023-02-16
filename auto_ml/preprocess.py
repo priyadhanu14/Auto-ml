@@ -3,6 +3,7 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import LabelEncoder
 
 class Preprocess:
     
@@ -52,7 +53,18 @@ class Preprocess:
             # lst = ['Feature 1','Label','Feature 4', 'Feature 5','Feature 6','Feature 7','Feature 8','Feature 9','Feature 10','Feature 11','Feature 12']
             # for wrd in lst:self.data[wrd]=self.data[wrd].interpolate()
             # self.data['Feature 3']=self.data['Feature 3'].ffill()
-            
+
+            # Label Encoder
+            le = LabelEncoder() 
+
+            # Replacement of string columns
+            dtypes = self.data.dtypes
+            keys = list(dtypes.keys())
+
+            for key in keys:
+                if(dtypes[key] == type("dummy_str")):
+                    self.data[key] = le.fit_transform(self.data[key])
+
             # Finding Categorical and Continuous
             categorical_columns  = list(filter(lambda x:1.*self.data[x].nunique()/self.data[x].count() < 0.05,self.data.columns))
             continuous_columns   = list(set(self.data.columns).difference(set(categorical_columns)))
@@ -65,8 +77,11 @@ class Preprocess:
             
             # Splitting x and y
             print(self.data.shape[1])
-            x=np.array(self.data.iloc[0:,0:self.data.shape[1]])
+            x=np.array(self.data.iloc[0:,0:self.data.shape[1]-1])
             y=np.array(self.data.iloc[0:,-1])
+
+            # print(x)
+            # print(y)
 
             # data feature scaling
             scaler = StandardScaler()

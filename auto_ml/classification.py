@@ -10,7 +10,12 @@ from sklearn.naive_bayes import GaussianNB
 from keras.models import Sequential
 from keras.layers import Dense
 
+# confusion_matrix(actual, predicted)
 
+# cm_display = metrics.ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
+
+# cm_display.plot()
+# plt.savefig('confusion.png')
 
 class Classification:
 
@@ -21,8 +26,8 @@ class Classification:
     RMSE_TEST2  = {'LINEAR REGRESSION':0,'LINEAR REGRESSION SKLEARN':0,'DECISION TREE':0,'RANDOM FOREST':0,'NEURAL NETWORK':0}
 
 
-    ACC_1 = {'DECISION TREE':None,'LOGISTIC REGRESSION':None,'NAIVE BAYES':None,'NEURAL NETWORK':None}
-    ACC_2 = {'DECISION TREE':None,'LOGISTIC REGRESSION':None,'NAIVE BAYES':None,'NEURAL NETWORK':None}
+    ACC_1 = {'DECISION TREE':None,'LOGISTIC_REGRESSION':None,'NAIVE BAYES':None,'NEURAL NETWORK':None}
+    ACC_2 = {'DECISION TREE':None,'LOGISTIC_REGRESSION':None,'NAIVE BAYES':None,'NEURAL NETWORK':None}
     
     def __init__(self,X_train,y_train,X_val,y_val,X_test1,y_test1,X_test2,y_test2):
         self.X_train = X_train
@@ -54,6 +59,7 @@ class Classification:
 
         E_TEST_df = pd.DataFrame(E_TEST_lst,index=['TEST1','TEST2'])
         print(E_TEST_df)
+        return E_TEST_df
 
 
     def model(self,model_type = 'all'):
@@ -61,11 +67,11 @@ class Classification:
             self.logistic_regression_sklearn()
             self.decision_tree_sklearn()
             self.naive_bayes_sklearn()
-            self.tabulate(['all'])
+            # self.tabulate(['all'])
 
         elif(model_type == 'logistic_regression'):
             self.logistic_regression_sklearn()
-            self.tabulate(['LOGISTIC REGRESSION'])
+            self.tabulate(['LOGISTIC_REGRESSION'])
 
         elif(model_type == 'decision_tree'):
             self.decision_tree_sklearn()
@@ -83,9 +89,10 @@ class Classification:
         clf = LogisticRegression(random_state=0).fit(self.X_train, self.y_train)
         y_predtest1 = clf.predict(self.X_test1)
         y_predtest2 = clf.predict(self.X_test2)
+        
         # test
-        self.ACC_1['LOGISTIC REGRESSION'] = accuracy_score(y_predtest1,self.y_test1)
-        self.ACC_2['LOGISTIC REGRESSION'] = accuracy_score(y_predtest2,self.y_test2)
+        self.ACC_1['LOGISTIC_REGRESSION'] = accuracy_score(y_predtest1,self.y_test1)
+        self.ACC_2['LOGISTIC_REGRESSION'] = accuracy_score(y_predtest2,self.y_test2)
 
 
     def generate_confusion_matrix(self,predictions,true_values):
